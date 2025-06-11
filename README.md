@@ -10,7 +10,7 @@ A set of logging utilities.
 $ /bin/bash -c "$(curl -#fL https://raw.githubusercontent.com/iamnewton/dotlog/main/scripts/install.sh)"
 ```
 
-:exclamation: N.B. If you wish to [fork this project](https://github.com/iamnewton/dotlog/fork) and maintain your own, you **MUST** substitute my username for your own in the above command and the variable (`$USERNAME`) found at the top of the `bin/log` script.
+:exclamation: N.B. If you wish to [fork this project](https://github.com/iamnewton/dotlog/fork) and maintain your own, you **MUST** substitute my username for your own in the above command and the variable (`$USERNAME`) found at the top of the `bin/dotlog` script.
 
 ### Requirements
 
