@@ -29,6 +29,10 @@ if command -v 'git' &>/dev/null; then
 	git pull --rebase origin main
 fi
 
+if [[ ! -d "$DEST_DIR" ]]; then
+  mkdir -p "$DEST_DIR"
+fi
+
 if [[ ! -w "$DEST_DIR" ]]; then
   echo "🔒 $DEST_DIR not writable. Retrying with sudo..."
   sudo ln -sfn "$INSTALL_DIR/bin/$REPO" "$DEST_DIR/$REPO"
