@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+
+# Default controls (override via env or flags)
+SILENT="${SILENT:-false}"
+NO_COLOR="${NO_COLOR:-false}"
+LOG="${LOG:-/tmp/setup.log}"
+# Resolve the calling script's basename
+SCRIPT_NAME="$(basename "${BASH_SOURCE[1]:-${0}}")"
+
+# Core logging function
+_log() {
+	local level="$1"
+	local color="$2"
+	local prefix="$3"
+	local message="$4"
+
+	echo "$(date) [$SCRIPT_NAME] $level: $message" >> "$LOG"
+
+	$SILENT && return
+
+	if $NO_COLOR; then
+		printf "[%s] %s %s\n" "$SCRIPT_NAME" "$prefix" "$message"
+	else
+		printf "%s[%s] %s%s %s\n" "$(tput setaf "$color")" "$SCRIPT_NAME" "$prefix" "$(tput sgr0)" "$message"
+	fi
+}
+
+# Public logging functions
+print_info()     { _log "INFO"    6 "Info:"      "$1"; }
+print_warning()  { _log "WARNING" 3 "⚠ Warning:" "$1"; }
+print_error()    { _log "ERROR"   1 "⊘ Error:"   "$1. Aborting!"; }
+print_success()  { _log "SUCCESS" 2 "✓ Success:" "$1"; }
+
+print_question() {
+	local message=$1
+	echo "$(date) QUESTION: $message" >>"$LOG"
+	$SILENT && return
+	if $NO_COLOR; then
+		printf "\n===> %s? " "$message"
+	else
+		printf "\n%s===> %s?%s " "$(tput setaf 3)" "$message" "$(tput sgr0)"
+	fi
+}
+
+print_process() {
+	local message=$1
+	echo "$(date) PROCESSING: $message" >>"$LOG"
+	$SILENT && return
+	if $NO_COLOR; then
+		printf "┃ %s...\n" "$message"
+	else
+		printf "%s┃%s %s...%s\n" "$(tput setaf 6)" "$(tput sgr0)$(tput setaf 7)" "$message" "$(tput sgr0)"
+	fi
+}
