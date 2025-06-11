@@ -4,7 +4,7 @@ set -euo pipefail
 # constants
 readonly GITHUB_URL="github.com"
 readonly USERNAME="iamnewton"
-readonly REPO="log"
+readonly REPO="dotlog"
 readonly INSTALL_DIR="$HOME/.$REPO"
 readonly DEST_DIR="/usr/local/bin"
 
@@ -31,22 +31,22 @@ fi
 
 if [[ ! -w "$DEST_DIR" ]]; then
   echo "🔒 $DEST_DIR not writable. Retrying with sudo..."
-  sudo ln -sfn "$INSTALL_DIR/bin/log" "$DEST_DIR/log"
+  sudo ln -sfn "$INSTALL_DIR/bin/$REPO" "$DEST_DIR/$REPO"
 else
-  ln -sfn "$INSTALL_DIR/bin/log" "$DEST_DIR/log"
+  ln -sfn "$INSTALL_DIR/bin/$REPO" "$DEST_DIR/$REPO"
 fi
 
 # Shell init updates (idempotent)
-if ! grep -Fq 'LOG_LIB="/usr/local/bin/log"' ~/.bashrc 2>/dev/null; then
-  echo 'export LOG_LIB="/usr/local/bin/log"' >> ~/.bashrc
-  echo 'source "$LOG_LIB"' >> ~/.bashrc
-  echo '✔ log auto-sourced in .bashrc'
+if ! grep -Fq 'DOTLOG="/usr/local/bin/dotlog"' ~/.bashrc 2>/dev/null; then
+  echo 'export DOTLOG="/usr/local/bin/dotlog"' >> ~/.bashrc
+  echo 'source "$DOTLOG"' >> ~/.bashrc
+  echo '✔ dotlog auto-sourced in .bashrc'
 fi
 
-if ! grep -Fq 'LOG_LIB="/usr/local/bin/log"' ~/.zshrc 2>/dev/null; then
-  echo 'export LOG_LIB="/usr/local/bin/log"' >> ~/.zshrc
-  echo 'source "$LOG_LIB"' >> ~/.zshrc
-  echo '✔ log auto-sourced in .zshrc'
+if ! grep -Fq 'DOTLOG="/usr/local/bin/dotlog"' ~/.zshrc 2>/dev/null; then
+  echo 'export DOTLOG="/usr/local/bin/dotlog"' >> ~/.zshrc
+  echo 'source "$DOTLOG"' >> ~/.zshrc
+  echo '✔ dotlog auto-sourced in .zshrc'
 fi
 
 if [[ "${SHELL:-}" == */zsh && -f ~/.zshrc ]]; then
@@ -59,4 +59,4 @@ elif [[ -f ~/.bashrc ]]; then
   source ~/.bashrc
 fi
 
-echo "✅ log successfully installed and ready to use!"
+echo "✅ $REPO successfully installed and ready to use!"
