@@ -3,7 +3,7 @@
 # Default controls (override via env or flags)
 SILENT="${SILENT:-false}"
 NO_COLOR="${NO_COLOR:-false}"
-LOG="${LOG:-/tmp/setup.log}"
+LOG="${LOG:-/tmp/dotlog.log}"
 # Resolve the calling script's basename
 SCRIPT_NAME="$(basename "${BASH_SOURCE[1]:-${0}}")"
 
