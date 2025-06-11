@@ -29,26 +29,15 @@ if command -v 'git' &>/dev/null; then
 	git pull --rebase origin main
 fi
 
-if [[ ! -d "$DEST_DIR" ]]; then
-  mkdir -p "$DEST_DIR"
-fi
-
-if [[ ! -w "$DEST_DIR" ]]; then
-  echo "🔒 $DEST_DIR not writable. Retrying with sudo..."
-  sudo ln -sfn "$INSTALL_DIR/bin/$REPO" "$DEST_DIR/$REPO"
-else
-  ln -sfn "$INSTALL_DIR/bin/$REPO" "$DEST_DIR/$REPO"
-fi
-
 # Shell init updates (idempotent)
-if ! grep -Fq 'DOTLOG="/usr/local/bin/dotlog"' ~/.bashrc 2>/dev/null; then
-  echo 'export DOTLOG="/usr/local/bin/dotlog"' >> ~/.bashrc
+if ! grep -Fq 'DOTLOG="$HOME/.dotlog/bin/dotlog"' ~/.bashrc 2>/dev/null; then
+  echo 'export DOTLOG="$HOME/.dotlog/bin/dotlog"' >> ~/.bashrc
   echo 'source "$DOTLOG"' >> ~/.bashrc
   echo '✔ dotlog auto-sourced in .bashrc'
 fi
 
-if ! grep -Fq 'DOTLOG="/usr/local/bin/dotlog"' ~/.zshrc 2>/dev/null; then
-  echo 'export DOTLOG="/usr/local/bin/dotlog"' >> ~/.zshrc
+if ! grep -Fq 'DOTLOG="$HOME/.dotlog/bin/dotlog"' ~/.zshrc 2>/dev/null; then
+  echo 'export DOTLOG="$HOME/.dotlog/bin/dotlog"' >> ~/.zshrc
   echo 'source "$DOTLOG"' >> ~/.zshrc
   echo '✔ dotlog auto-sourced in .zshrc'
 fi
